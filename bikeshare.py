@@ -18,10 +18,9 @@ def get_filters():
     print('Hello! Let\'s explore some US bikeshare data!')
     # Get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     # Making sure, that user can only make valid inputs by checking if the input matches with one entry in the list 
-    while True:
-        city_list = ['chicago', 'new york city', 'washington'] 
+    while True: 
         city = input('\nWould you see data for Chicago, New York City or Washington? \n').lower()
-        if city in city_list:
+        if city in CITY_DATA:
             break
         else:
             print('Ooops, that does not work. Make sure to write one of the stated City names.')
@@ -147,10 +146,8 @@ def station_stats(df):
     print('The most commonly used End Station is: ', most_common_end_station)
 
     # Display most frequent combination of start station and end station trip
-    # Creating a new colomn by combining the columns 'Start Station' und 'End Station'
-    df['Start-End'] = df['Start Station']+str(' to ')+df['End Station']
-    most_common_start_end = df['Start-End'].mode()[0]
-    print('The most frequent combination is from', most_common_start_end)
+    most_popular_trip = df.groupby(['Start Station', 'End Station']).size().idxmax()
+    print('The most frequent combination is from', most_popular_trip)
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -247,7 +244,8 @@ def raw_data(df_raw):
     Args:
         df_raw - DataFrame with the raw datas without the supporting columns "month" and "day of the week"
         """
-
+    #Display all the columns in the dataframe
+    pd.set_option('display.max_columns',200)
     # Making sure, that user can only make valid inputs by checking if the input matches with one entry in the list
     while True:
         raw_data_slice = input('Do you want to see 5 rows of the raw data? Enter "yes" or "no": \n').lower()
