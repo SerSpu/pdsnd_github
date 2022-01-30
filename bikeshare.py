@@ -244,7 +244,8 @@ def raw_data(df_raw):
     Args:
         df_raw - DataFrame with the raw datas without the supporting columns "month" and "day of the week"
         """
-
+    #Display all the columns in the dataframe
+    pd.set_option('display.max_columns',200)
     # Making sure, that user can only make valid inputs by checking if the input matches with one entry in the list
     while True:
         raw_data_slice = input('Do you want to see 5 rows of the raw data? Enter "yes" or "no": \n').lower()
